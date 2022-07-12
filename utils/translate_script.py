@@ -9,9 +9,11 @@ def wrt_bk2json(meta_dict, save_path=None):
     with open(save_path, 'w+') as f_ptr:
         json.dump(meta_dict, f_ptr)
 
+
+
 def qs_from_eng2ch(meta_dict, translator):
 
-    def eng_phase2ch_phase(phase):
+    def eng_phase2ch_phase(phase, translator):
         # maynot have preprocessing
         preproc_phase = phase
         return translator(preproc_phase)
@@ -39,6 +41,9 @@ def integrate_test():
 
     wrt_bk2json(meta_dict, save_js_path)
     
+def get_prepare_translator():
+    
+
 
 if __name__ == "__main__":
     integrate_test()
