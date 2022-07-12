@@ -168,13 +168,13 @@ if [ "${DIRECTION}" = "en_x" ]; then
         --fp16 \
         --path ${MODEL} \
         --task=translation_multi_simple_epoch \
-        --langs ${EN-zho_Hans} \
-        --lang-pairs eng-${zho_Hans} \
+        --langs ${zho_Hans} \
+        --lang-pairs eng-${lang} \
         --source-lang eng --target-lang ${lang} \
         --encoder-langtok "src" --decoder-langtok \
         --add-data-source-prefix-tags \
         --gen-subset train \
-        --max-tokens ${MAX_TOKENS} \
+        --max-tokens ${250} \
         --skip-invalid-size-inputs-valid-test \
         ${DECODE_ARGS}" > ${OUTDIR}/eng-${lang}.job
 
