@@ -1,4 +1,0 @@
-cluster_name: example
-partition: ???
-memory_multiplier: 50
-timeout_min: 1000
