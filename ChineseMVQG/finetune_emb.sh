@@ -1,0 +1,16 @@
+python3 finetune_t5.py \
+    --max_seq_len 200 \
+    --output_dir ./checkpoints/t5_vqg_pretrain_vist \
+    --model_type t5_vc \
+    --model_name_or_path /home/VIST/projects/multi-vqg/checkpoints/t5_adapter_lr_5e-5_acc_step_1/checkpoint-169000/ \
+    --warmup_steps 10 \
+    --per_gpu_train_batch_size 2 \
+    --save_steps 500 \
+    --num_train_epochs 20 \
+    --postfix separate \
+    --gradient_accumulation_steps 4 \
+    --prefix pretrain_vist \
+    --use_adapter \
+    --learning_rate 1e-5 \
+    --per_gpu_eval_batch_size 8 \
+    --freeze_params_except_emb

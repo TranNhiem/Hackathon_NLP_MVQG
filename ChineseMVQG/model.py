@@ -412,6 +412,10 @@ def freeze_model_parameters(model, exception_keyword="adapter"):
         if exception_keyword not in name and "layer_norm" not in name:
             param.requires_grad = False
 
+def freeze_params_except_emb(model, emb_keyword):
+    for name, param in model.named_parameters():
+        if emb_keyword not in name:
+            param.requires_grad = False
 
 class Activation_Function_Class(nn.Module):
     """

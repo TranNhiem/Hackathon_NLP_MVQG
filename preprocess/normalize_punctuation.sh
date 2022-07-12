@@ -1,8 +1,9 @@
 set -euo pipefail
 
-root=$(dirname $0)
+root="/workspace/preprocess"
 
 lang_map_path=$root/stopes.utils.map_token_lang.tsv
+echo $lang_map_path
 
 usage () {
     echo "usage: $0 lang" >&2
