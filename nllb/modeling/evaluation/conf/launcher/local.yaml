@@ -1,7 +1,0 @@
-# @package launcher
-
-defaults:
-  - cache: no_cache
-  - lang: ???
-
-_target_: stopes.core.Launcher
