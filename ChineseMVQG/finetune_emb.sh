@@ -1,8 +1,8 @@
 python3 finetune_t5.py \
     --max_seq_len 200 \
-    --output_dir ./checkpoints/t5_vqg_pretrain_vist \
+    --output_dir ./checkpoints/t5_vqg_pretrain_vist_chinese \
     --model_type t5_vc \
-    --model_name_or_path /home/VIST/projects/multi-vqg/checkpoints/t5_adapter_lr_5e-5_acc_step_1/checkpoint-169000/ \
+    --model_name_or_path /home/VIST/projects/Hackathon_NLP_MVQG/ChineseMVQG/checkpoints/t5_vqg_pretrain_vist/checkpoint-34000/ \
     --warmup_steps 10 \
     --per_gpu_train_batch_size 2 \
     --save_steps 500 \
