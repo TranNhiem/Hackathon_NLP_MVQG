@@ -1,4 +1,0 @@
-defaults:
-  - generate_multi
-
-replication_count: 1
