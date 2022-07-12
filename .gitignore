@@ -1,2 +1,7 @@
 ChineseMVQG/checkpoints
 ChineseMVQG/hackathon-vqg-09bf509af932.json
+data
+sentencepiece
+build
+checkpoint*
+__pycache__

@@ -16,7 +16,7 @@ if __name__ == "__main__":
     args = parser.parse_args() 
     json_file = args.input_json
 
-    output_json_file = f"{json_file.split('/')[-1].split('.')[0]}_ch.json"
+    output_json_file = f"{json_file.split('/')[-1].split('.')[0]}_google.json"
     output_json_file = f"../data/{output_json_file}"
     output_dict = {}
 
