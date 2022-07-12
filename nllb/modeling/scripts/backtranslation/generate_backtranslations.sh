@@ -6,7 +6,17 @@
 # search for decoding via $1.
 
 MODEL=/path/to/model/checkpoint/
-MODEL_LANGS="ace_Latn,afr_Latn,arb_Arab,ast_Latn,ayr_Latn,bel_Cyrl,bul_Cyrl,cjk_Latn,cym_Latn,eng_Latn,eus_Latn,ewe_Latn,pes_Arab,fin_Latn,fon_Latn,fra_Latn,fuv_Latn,hau_Latn,hin_Deva,isl_Latn,ita_Latn,jpn_Jpan,kea_Latn,kik_Latn,kin_Latn,kon_Latn,kor_Hang,lvs_Latn,lin_Latn,luo_Latn,mal_Mlym,mar_Deva,nso_Latn,oci_Latn,por_Latn,run_Latn,rus_Cyrl,sin_Sinh,snd_Arab,swh_Latn,tam_Taml,tat_Cyrl,tel_Telu,tir_Ethi,tsn_Latn,tso_Latn,twi_Latn,urd_Arab,vie_Latn,wol_Latn,yor_Latn,yue_Hant,zho_Hans"
+MODEL_LANGS="ace_Latn,afr_Latn,arb_Arab,
+            ast_Latn,ayr_Latn,bel_Cyrl,bul_Cyrl,cjk_Latn,
+            cym_Latn,eng_Latn,eus_Latn,ewe_Latn,pes_Arab,
+            fin_Latn,fon_Latn,fra_Latn,fuv_Latn,hau_Latn,
+            hin_Deva,isl_Latn,ita_Latn,jpn_Jpan,kea_Latn,
+            kik_Latn,kin_Latn,kon_Latn,kor_Hang,lvs_Latn,
+            lin_Latn,luo_Latn,mal_Mlym,mar_Deva,nso_Latn,
+            oci_Latn,por_Latn,run_Latn,rus_Cyrl,sin_Sinh,
+            snd_Arab,swh_Latn,tam_Taml,tat_Cyrl,tel_Telu,
+            tir_Ethi,tsn_Latn,tso_Latn,twi_Latn,urd_Arab,
+            vie_Latn,wol_Latn,yor_Latn,yue_Hant,zho_Hans"
 
 MONODIR=/path/to/monolingual/data
 OUTDIR=/path/to/output/generated/data
@@ -158,13 +168,13 @@ if [ "${DIRECTION}" = "en_x" ]; then
         --fp16 \
         --path ${MODEL} \
         --task=translation_multi_simple_epoch \
-        --langs ${MODEL_LANGS} \
+        --langs ${zho_Hans} \
         --lang-pairs eng-${lang} \
         --source-lang eng --target-lang ${lang} \
         --encoder-langtok "src" --decoder-langtok \
         --add-data-source-prefix-tags \
         --gen-subset train \
-        --max-tokens ${MAX_TOKENS} \
+        --max-tokens ${250} \
         --skip-invalid-size-inputs-valid-test \
         ${DECODE_ARGS}" > ${OUTDIR}/eng-${lang}.job
 
