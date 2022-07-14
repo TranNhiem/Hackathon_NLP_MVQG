@@ -330,7 +330,7 @@ def main(args):
     # tokenizer = tokenizer_class.from_pretrained(
     #     args.tokenizer_name if args.tokenizer_name else args.model_name_or_path,
     #     do_lower_case=args.do_lower_case)
-    tokenizer = tokenizer_class.from_pretrained(args.model_name_or_path if args.tokenizer is None else args.tokenizer, do_lower_case=args.do_lower_case)
+    tokenizer = tokenizer_class.from_pretrained(args.tokenizer_name if args.tokenizer_name else args.model_name_or_path, local_files_only=True)
 
     tokenizer.add_special_tokens({
         "additional_special_tokens": tokenizer.special_tokens
@@ -356,8 +356,6 @@ def main(args):
     config.individual_vis_layer_norm = args.individual_vis_layer_norm
 
     model = model_class.from_pretrained(args.model_name_or_path, from_tf=bool('.ckpt' in args.model_name_or_path), config=config)
-    model.extend_vocab(len(tokenizer))
-    model.encoder.extend_order_embedding(args.n_images + 1)
 
     if args.freeze_lm_params:
         freeze_model_parameters(model, exception_keyword="adapter")
@@ -366,7 +364,12 @@ def main(args):
         ##### Get mt5 embeddings
         mt5_model = AutoModelForSeq2SeqLM.from_pretrained("google/mt5-base")
         model.set_input_embeddings(mt5_model.shared)
-        freeze_params_except_emb(model, emb_keyword="shared.weight")
+
+    model.extend_vocab(len(tokenizer))
+    model.encoder.extend_order_embedding(args.n_images + 1)
+
+    # if args.freeze_params_except_emb:
+    #     freeze_params_except_emb(model, emb_keyword="shared.weight")
 
     model.to(args.device)
 
@@ -451,14 +454,13 @@ if __name__ == "__main__":
                         help="Whether to use T5 with adapter layers")
     parser.add_argument('--freeze_lm_params', action='store_true',
                         help="Whether to freeze parameters of all layers except adapters and layer norm")
-    parser.add_argument('--freeze_params_except_emb', action='store_true,
-                        help="Whether to freeze all the parameters except the embedding')
+    parser.add_argument('--freeze_params_except_emb', action='store_true',
+                        help="Whether to freeze all the parameters except the embedding")
     # Pretrain parameters
     parser.add_argument("--model_type", default="gpt2_vc", type=str,
                         help="The model architecture to be fine-tuned.")
     parser.add_argument("--model_name_or_path", default="gpt2", type=str,
                         help="The model checkpoint for weights initialization.")
-    parser.add_argument("--tokenizer", type=str, default=None)
     parser.add_argument("--mlm", action='store_true',
                         help="Train with masked-language modeling loss instead of language modeling.")
     parser.add_argument("--mlm_probability", type=float, default=0.15,

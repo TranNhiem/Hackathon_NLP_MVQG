@@ -9,7 +9,7 @@ dotenv.load_dotenv()
 
 SWIG_PATH = os.getenv('SWIG_PATH')
 
-IMSITU_ROLES_LIST = f'{SWIG_PATH}/SWiG_jsons/imsitu_space.json'
+IMSITU_ROLES_LIST = f'../data/imsitu_space_ch.json'
 
 class VQGTokenizer():
     def __init__(self, 
@@ -49,7 +49,7 @@ class VQGTokenizer():
             roles = set()
             for item in imsitu_roles['verbs']:
                 if 'order' in imsitu_roles['verbs'][item]:
-                    for o in imsitu_roles['verbs'][item]['order']:
+                    for o in imsitu_roles['verbs'][item]['order_ch']:
                         roles.add(o)
             self.special_situ_roles_tokens = [begin_situation, end_situation]
             self.situ_role_tokens = {}
@@ -160,6 +160,7 @@ class VLT5Tokenizer(T5Tokenizer):
         additional_special_tokens=None,
         **kwargs
     ):
+        if extra_ids == 0: extra_ids = 100
         # Add extra_ids to the special token list
         if extra_ids > 0 and additional_special_tokens is None:
             additional_special_tokens = ["<extra_id_{}>".format(i) for i in range(extra_ids)]

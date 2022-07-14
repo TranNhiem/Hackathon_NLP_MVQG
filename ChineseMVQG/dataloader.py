@@ -158,18 +158,18 @@ class Dataset():
 
     def _load_data(self):
 
-        with open(f'{SWIG_PATH}/SWiG_jsons/imsitu_space.json', 'r') as f:
+        with open(f'../data/imsitu_space_ch.json', 'r', encoding='utf-8') as f:
             mapping = json.load(f)
             noun_mapping = mapping['nouns']
             verb_role_mapping = mapping['verbs']
 
-        vist_path = f"{QUESTION_PATH}/{self.split}.json"
-        with open(vist_path, 'r') as f:
+        vist_path = f"{QUESTION_PATH}/{self.split}_ch.json"
+        with open(vist_path, 'r', encoding='utf-8') as f:
             corpus = json.load(f)
 
         tokens, labels, text_order_ids, image_order_ids, region_order_ids, text_mask, image_list = [], [], [], [], [], [], []
 
-        task_token = self.tokenizer.tokenize(f'generate question:')
+        task_token = self.tokenizer.tokenize(f'根據圖片生成問題:')
 
         # for i, data in tqdm(enumerate(corpus)):
         for k, v in tqdm(corpus.items()):
@@ -182,18 +182,19 @@ class Dataset():
                 # construct image token 
                 img_index = self.image_feat["valid_img_id_dict"][img_id]
                 verb      = self.image_feat["verbs"][img_index]
-                roles     = verb_role_mapping[verb]['order']
+                verb_ch   = verb_role_mapping[verb]["chinese"]
+                roles_ch  = verb_role_mapping[verb]['order_ch']
 
                 noun_id_list = self.image_feat["objects"][img_index]
-                nouns = []
+                nouns_ch = []
                 for noun_id in noun_id_list:
-                    nouns.append(noun_mapping[noun_id]['gloss'][0] if noun_id != '' and noun_id != 'Pad' and noun_id != 'oov' else '')
+                    nouns_ch.append(noun_mapping[noun_id]['gloss_ch'][0] if noun_id != '' and noun_id != 'Pad' and noun_id != 'oov' else '')
 
                 sub_text_tokens, sub_image_order_ids, sub_text_order_ids, sub_region_order_ids = \
                     self._img_to_token(
-                        verb, 
-                        nouns, 
-                        roles,
+                        verb_ch, 
+                        nouns_ch, 
+                        roles_ch,
                         image_order=i+1,
                         num_feat=len(self.image_feat["objects_feats"][img_index] + 1)
                     ) # <b_img> ... <e_img> <b_verb> v <e_verb> <b_obj> ... <e_obj>
@@ -220,7 +221,7 @@ class Dataset():
             _tokens, _text_order_ids, _image_order_ids, _region_order_ids, _text_mask, _labels = [], [], [], [], [], []
             for question in v:
                 label_tokens = self._label_to_token(question["Question"])
-            
+                
                 _tokens.append(padded_tokens)
                 _text_order_ids.append(padded_text_order_ids)
                 _image_order_ids.append(padded_image_order_ids)

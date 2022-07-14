@@ -528,7 +528,7 @@ def main():
             print("Inference Generations: {}".format(generations))
         idx += 1
 
-    json.dump(results, open(output_file,'w'))
+    json.dump(results, open(output_file,'w'), ensure_ascii=False)
     print('Saved to', output_file)
 
 if __name__ == '__main__':

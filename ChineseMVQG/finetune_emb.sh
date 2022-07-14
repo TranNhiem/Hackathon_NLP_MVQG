@@ -1,8 +1,8 @@
-python3 finetune_t5.py \
+python3 finetune.py \
     --max_seq_len 200 \
     --output_dir ./checkpoints/t5_vqg_pretrain_vist_chinese \
     --model_type t5_vc \
-    --model_name_or_path /home/VIST/projects/Hackathon_NLP_MVQG/ChineseMVQG/checkpoints/t5_vqg_pretrain_vist/checkpoint-34000/ \
+    --model_name_or_path ./checkpoints/t5_vqg_pretrain_vist/checkpoint-34000/ \
     --warmup_steps 10 \
     --per_gpu_train_batch_size 2 \
     --save_steps 500 \
@@ -13,4 +13,5 @@ python3 finetune_t5.py \
     --use_adapter \
     --learning_rate 1e-5 \
     --per_gpu_eval_batch_size 8 \
-    --freeze_params_except_emb
+    --freeze_params_except_emb \
+    --tokenizer_name google/mt5-base

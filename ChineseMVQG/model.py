@@ -1398,6 +1398,7 @@ class VLT5(T5ForConditionalGeneration):
             return sequence_output
 
         lm_logits = self.lm_head(sequence_output)
+        lm_logits = lm_logits.to(torch.float32)
 
         loss = None
         if labels is not None:
